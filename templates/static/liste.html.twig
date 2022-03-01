@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-dark"><marquee>Liste des contacts</marquee></h1>
+
+<div class="table-responsive">
+<table class="table table-hover">
+<thread>
+<tr>
+<th scope="col">Nom</th>
+<th scope="col">email</th>
+<th scope="col">sujet</th>
+<th scope="col">message</th>
+<th scope="col"></th>
+<th scope="col"></th>
+</tr>
+</thread>
+<tbody>
+{% for contact in contacts %}
+<tr class = "{{ cycle(['table-primary', 'table-secondary'], loop.index0)}}">
+<td> {{ contact.nom | capitalize }}
+</td>
+<td> {{ contact.email}}
+</td>
+<td> {{ contact.sujet}}
+</td>
+<td> {{ contact.message}}
+</td>
+<td><a href="{{path('modifC', {'id':contact.id})}}"><i class="bi bi-pen"></i></a></td>
+<td><a href="{{path('liste', {'id':contact.id})}}"><i class="bi bi-trash-fill"></i></a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

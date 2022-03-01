@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block body %}
+
+<h1>Partage</h1>
+
+<select class="form-select" aria-label="Default select example">
+        {% for user in users %}
+         <option >{{user.email}}</option>
+        {% endfor %}
+</select>
+ <a class="btn btn-lg btn-primary btn-block" href="{{path("profil")}}" >envoyer</a>
+
+
+{% endblock %}
+

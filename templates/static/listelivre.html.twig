@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-dark"><marquee>Liste du livre d'or</marquee></h1>
+
+<div class="table-responsive">
+<table class="table table-hover">
+<thread>
+<tr>
+<th scope="col">Nom</th>
+
+<th scope="col">message</th>
+<th scope="col">note</th>
+</tr>
+</thread>
+<tbody>
+{% for livredor in livredors %}
+<tr class = "{{ cycle(['table-primary', 'table-secondary'], loop.index0)}}">
+<td> {{ livredor.nom | capitalize }}
+</td>
+<td> {{ livredor.message}}
+</td>
+<td> {{ livredor.nombre}}
+</td>
+<td><a href="{{path('modifL', {'id':livredor.id})}}"><i class="bi bi-pen"></i></a></td>
+<td><a href="{{path('listelivre', {'id':livredor.id})}}"><i class="bi bi-trash-fill"></i></a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

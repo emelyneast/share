@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block body %}
+
+	<div ckass="container-fluid">
+		<h1 class="text-dark text-center m-2">
+			Ajout fichier</h1>
+		<div class="row justify-content-center">
+			<div class="col-8 bg-dark p-4 m-0 text-white">
+				{{form_start(form)}}
+				<div class="form-group">
+					{{ form_label(form.nom, 'Sélectionnez un fichier', {'label_attr': {'class': 'fw-bold m-1'}}) }}
+					{{ form_widget(form.nom, {'attr': {'class': 'form-control m-1'}}) }}
+				</div>
+				<div class="form-group">
+					{{ form_label(form.inscrire, 'Propriétaire', {'label_attr': {'class': 'fw-bold m-1'}}) }}
+					{{ form_widget(form.inscrire, {'attr': {'class': 'form-control m-1'}}) }}
+				</div>
+				<div class="form-group">
+					{{ form_label(form.themes, 'Thèmes : ', {'label_attr': {'class': 'fw-bold m-1'}}) }}
+
+					{% for theme in form.themes |sort((a, b) => a.vars.label <=> b.vars.label) %}
+
+						{{ form_label(theme, '' ,{'label_attr': {'class': 'fw-bold m-1'}}) }}
+						{{ form_widget(theme, {'attr': {'class': ''}}) }}
+					{% endfor %}
+				</div>
+				<div class="form-group mx-auto text-center">
+					{{ form_widget(form.envoyer, { 'label': "Ajouter le fichier", 'attr': {'class': 'btn fw-bold bg-primary text-white mx-auto text-center m-4'}}) }}
+
+				</div>
+					{{ form_end(form, {render_rest: true}) }}
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-8 bg-dark p-4 m-0 text-primary">
+				<div class="table-responsive">
+					<table class="table caption-top">
+						<caption>Liste des fichiers</caption>
+						<thead>
+							<tr>
+								<th scope="col">Nom</th>
+								<th scope="col">Propriétaire</th>
+								<th scope="col">Date</th>
+								<th scope="col">Extension</th>
+								<th scope="col">Taille</th>
+								<th scope="col"></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for f in fichiers %}
+								<tr class="{{ cycle(['table-primary', 'table-secondary'], loop.index0) }}">
+									<td>{{f.original}}</td>
+									<td>{{f.inscrire.nom}}
+										{{f.inscrire.prenom}}</td>
+										
+									<td>{{f.date | date("d-m-Y à H:i:s") }}</td>
+									<td>
+										{% if f.extention == 'pdf'%}
+											<i class="bi bi-file-earmark-pdf"></i>
+										{% else %}
+											<i class="bi bi-file-earmark-text"></i>
+										{% endif %}
+									</td>
+									{% set ko = f.taille / 1000 %}
+									<td>{{ko}}
+										ko</td>
+										<td><a href="{{path('telechargement-fichier', {'id':f.id})}}"><i class="bi bi-download "></i></a>
+										<td><a href="{{path('ajoutFichier', {'id':f.id})}}"><i class="bi bi-trash-fill"></i></a></td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

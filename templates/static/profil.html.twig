@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block body %}
+	
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+	<h1>profil</h1>
+	<h3>{{ app.user.inscrire.photo }}</h3>
+		<a href="{{path('ajoutPhoto', {'id':app.user.inscrire.id})}}">Photo</i></a>
+		<h3>email :{{ app.user.email }}</h3>
+        <h3>nom: {{ app.user.inscrire.nom }}</h3>
+        <h3>prenom :{{ app.user.inscrire.prenom }}</h3>
+		
+
+        <div class="row justify-content-center">
+			<div class="col-8 bg-dark p-4 m-0 text-primary">
+				<div class="table-responsive">
+					<table class="table caption-top">
+						<caption>Liste des fichiers</caption>
+						<thead>
+							<tr>
+								<th scope="col">Nom</th>
+								<th scope="col">Date</th>
+								<th scope="col">Extension</th>
+								<th scope="col">Taille</th>
+								<th scope="col"></th>
+								
+							</tr>
+						</thead>
+						
+	<tbody>
+							{% for f in app.user.inscrire.fichiers %}
+								<tr class="{{ cycle(['table-primary', 'table-secondary'], loop.index0) }}">
+									<td>{{f.original}}</td>
+									
+								
+										
+									<td>{{f.date | date("d-m-Y à H:i:s") }}</td>
+									<td>
+										{% if f.extention == 'pdf'%}
+											<i class="bi bi-file-earmark-pdf"></i>
+										{% else %}
+											<i class="bi bi-file-earmark-text"></i>
+										{% endif %}
+									</td>
+									{% set ko = f.taille / 1000 %}
+									<td>{{ko}}
+										ko</td>
+										<td><a href="{{path('telechargement-fichier', {'id':f.id})}}"><i class="bi bi-download "></i></a>
+										<td><a href="{{path('ajoutFichier', {'id':f.id})}}"><i class="bi bi-trash-fill"></i></a></td>*
+										<td><a href="{{path('partage', {'id':f.id})}}"><i class="bi bi-share"></i></a></td>
+								</tr>
+							{% endfor %}
+						</tbody>
+						
+					</table>
+				</div>
+			</div>
+		</div>
+	
+{% endif %}
+{% endblock %}

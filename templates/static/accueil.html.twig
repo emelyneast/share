@@ -5,6 +5,10 @@
 
 {% block body %}
 	<h1 class="text-dark"><marquee>Bienvenue sur Share</marquee></h1>
-cc
 
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+	
+		<h3> Bonjour {{ app.user.email }}</h3>
+	
+{% endif %}
 {% endblock %}
